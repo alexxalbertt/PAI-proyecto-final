@@ -7,8 +7,22 @@
 </head>
 <body>
 
-    <!-- AQUÍ VA EL FORMULARI -->
+    <h1>Formulari de registre</h1>
 
-    <script src="js/formulari.js"></script>
-</body>
-</html>
+    <form id="formulari">
+
+        <label for="nom">Nom i cognoms:</label>
+        <input type="text" id="nom">
+        <span class="error" id="errorNom"></span>
+
+        <label for="edat">Rang d’edat:</label>
+        <select id="edat">
+            <option value="">Selecciona una opció</option>
+            <option value="0-17">0-17</option>
+            <option value="18-25">18-25</option>
+            <option value="26-40">26-40</option>
+            <option value="41-55">41-55</option>
+            <option value="56-65">56-65</option>
+            <option value="65+">Més de 65</option>
+        </select>
+        <span class="error" id="errorEdat"></span>
