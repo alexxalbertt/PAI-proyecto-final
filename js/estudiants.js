@@ -161,5 +161,28 @@ function exercici04() {
     resultat.appendChild(p);
   });
 }
+/* ================================================= */
+/* ENLLAÇOS DEL MENÚ                                 */
+/* ================================================= */
+
+document.getElementById("exer01").addEventListener("click", function (e) {
+  e.preventDefault();
+  exercici01();
+});
+
+document.getElementById("exer02").addEventListener("click", function (e) {
+  e.preventDefault();
+  exercici02();
+});
+
+document.getElementById("exer03").addEventListener("click", function (e) {
+  e.preventDefault();
+  exercici03();
+});
+
+document.getElementById("exer04").addEventListener("click", function (e) {
+  e.preventDefault();
+  exercici04();
+});
 
 
