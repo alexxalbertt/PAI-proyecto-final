@@ -1,118 +1,112 @@
-// DeclaraciÃ³ de variables globales
+// Declaració de variables globals
 let obj = [];
-// Fi de la declaraciÃ³ de variables globales
+// Fi de la declaració de variables globals
 
 /********************************************************************************/
-/* FunciÃ³ readSingleFile(e)                                                     */
-/* FunciÃ³ que permet que l'usuari recuperi un arxiu del seu disc dur            */
+/* Funció readSingleFile(e)                                                     */
+/* Permet a l'usuari carregar un fitxer CSV del seu ordinador                  */
 /********************************************************************************/
-
 function readSingleFile(e) {
-  var file = e.target.files[0];
+  const file = e.target.files[0];
   if (!file) {
     return;
   }
 
-  let reader = new FileReader();
-  reader.onload = function (e) {
-    let contents = e.target.result;
+  const reader = new FileReader();
+  reader.onload = function (event) {
+    const contents = event.target.result;
     generaObj(contents);
   };
   reader.readAsText(file);
 }
 
-
 /********************************************************************************/
-/* FunciÃ³ generaObj(contents)                                                   */
-/* Aquesta funciÃ³ converteix les dades rebudes, en format csv en un objecte     */
-/* que tÃ© els segÃ¼ents camps:                                                   */
-/* - diaSet --> Dia de la setmana (en text)                                     */
-/* - mes --> Mes (nÃºmeric)                                                      */
-/* - nomMes --> Nom del mes                                                     */
-/* - diaMes --> Dia del mes                                                     */
-/* - hora --> hora (sense minuts). Valor enter entre 0 i 23                     */
-/* - descAcc --> DescripciÃ³ de l'accident                                       */
-/* - districte --> Nom del districte                                            */
-/* - nDist --> NÃºmero de districte                                              */
-/* - barri --> Nom del barri                                                    */
-/* L'arxiu original tÃ© mÃ©s dades, perÃ² per a aquests exercicis s'han agafat     */
-/* nomÃ©s aquestes.                                                              */
+/* Funció generaObj(contents)                                                   */
+/* Converteix el CSV en un array d'objectes amb les dades necessàries           */
 /********************************************************************************/
-
 function generaObj(contents) {
-  const element = document.getElementById("file-parsed");
-  const json = contents.split("\r");
-  const fi = json.length;
-  let taula = [];
-  let t = json[1].split(",");
-  document.getElementById("any").innerHTML = "Any: "+t[9].replace(/['"]+/g, '');
+  // Reiniciem l'array per evitar dades antigues
+  obj = [];
 
-  for (let i = 1; i < fi-1; i++) {
-    let taula = json[i].split(",");
-    if (taula[4][0]==='"') {
-      obj[i - 1] = {};
-      obj[i - 1].diaSet  = taula[9];
-      obj[i - 1].mes = parseInt(taula[11]);
-      obj[i - 1].nomMes = taula[12];
-      obj[i - 1].diaMes = parseInt(taula[13]);
-      obj[i - 1].hora = parseInt(taula[14]);
-      obj[i - 1].descAcc = taula[15];
-      obj[i - 1].districte = taula[2];
-      obj[i - 1].nDist = parseInt(taula[1]); 
-      obj[i - 1].barri = taula[4]+","+taula[5];
+  const files = contents.split("\r");
+  const totalFiles = files.length;
+
+  // Mostrem l'any
+  const primeraLinia = files[1].split(",");
+  document.getElementById("any").innerHTML =
+    "Any: " + primeraLinia[9].replace(/['"]+/g, "");
+
+  for (let i = 1; i < totalFiles - 1; i++) {
+    const camps = files[i].split(",");
+
+    let registre = {};
+
+    // Cas en què el nom del barri conté comes
+    if (camps[4][0] === '"') {
+      registre.diaSet = camps[9];
+      registre.mes = parseInt(camps[11]);
+      registre.nomMes = camps[12];
+      registre.diaMes = parseInt(camps[13]);
+      registre.hora = parseInt(camps[14]);
+      registre.descAcc = camps[15];
+      registre.districte = camps[2];
+      registre.nDist = parseInt(camps[1]);
+      registre.barri = camps[4] + "," + camps[5];
     } else {
-      obj[i - 1] = {};
-      obj[i - 1].diaSet  = taula[8];
-      obj[i - 1].mes = parseInt(taula[10]);
-      obj[i - 1].nomMes = taula[11];
-      obj[i - 1].diaMes = parseInt(taula[12]);
-      obj[i - 1].hora = parseInt(taula[13]);
-      obj[i - 1].descAcc = taula[14];
-      obj[i - 1].districte = taula[2];
-      obj[i - 1].nDist = parseInt(taula[1]); 
-      obj[i - 1].barri = taula[4];
+      registre.diaSet = camps[8];
+      registre.mes = parseInt(camps[10]);
+      registre.nomMes = camps[11];
+      registre.diaMes = parseInt(camps[12]);
+      registre.hora = parseInt(camps[13]);
+      registre.descAcc = camps[14];
+      registre.districte = camps[2];
+      registre.nDist = parseInt(camps[1]);
+      registre.barri = camps[4];
     }
+
+    obj.push(registre);
   }
+
   return obj;
 }
 
-// Afegim el esdeveniment que crida a la funciÃ³ que llegeix les dades quan es modifica 
-// el contingut del camp d'entrada d'arxius.
-
-document.getElementById("file-input").addEventListener("change", readSingleFile, false);
+// Afegim l'esdeveniment de càrrega del fitxer
+document
+  .getElementById("file-input")
+  .addEventListener("change", readSingleFile, false);
 
 /********************************************************************************/
-/* FunciÃ³ creaFormulari()                                                       */
-/* Crea un formulari que permet seleccionar el districte i l'opciÃ³ a portar a   */
-/* terme. Per a fer aixÃ² es crea un select per seleccionar el districte i uns   */
-/* radio buttons per seleccionar quines dades es volen obtenir                  */
+/* Funció creaFormulari()                                                       */
+/* Crea un formulari amb un select per seleccionar el districte                */
 /********************************************************************************/
-
 function creaFormulari() {
-  let text = document.getElementById("resultats");
-  text.innerHTML = ""; // Esborro qualsevol contingut anterior
-  // Recuperem els noms dels districtes de la taula obj
-  // Hem de tenir present que hi ha un districte -1 que Ã©s "no conegut".
-  let f = document.createElement("form"); // Creem el formulari
-  f.name="formulari"; // Definim l'atribut name="formulari"
+  const text = document.getElementById("resultats");
+  text.innerHTML = "";
 
-  // CreaciÃ³ del select
+  const f = document.createElement("form");
+  f.name = "formulari";
+
+  // Recuperem els districtes (0 = Altres, 1–10 Barcelona)
   let districtes = [];
   districtes[0] = "Altres";
-  for (let i= 1; i < 11; i++) {
-    districtes[i] = obj.find(element => element.nDist === i).districte;
+
+  for (let i = 1; i <= 10; i++) {
+    const element = obj.find(el => el.nDist === i);
+    districtes[i] = element ? element.districte : "Districte " + i;
   }
-  let sel = document.createElement("select");
-  sel.name="districtes"; 
-  sel.id="districtes";
-  for (let i = 0; i < 11; i++) {
-    let op = document.createElement("option");
-    op.appendChild(document.createTextNode(districtes[i]));
+
+  const sel = document.createElement("select");
+  sel.name = "districtes";
+  sel.id = "districtes";
+
+  for (let i = 0; i < districtes.length; i++) {
+    const op = document.createElement("option");
     op.value = districtes[i];
+    op.appendChild(document.createTextNode(districtes[i]));
     sel.appendChild(op);
   }
-  f.appendChild(sel); // Afegim el select al formulari.
 
+  f.appendChild(sel);
   text.appendChild(f);
-
 }
+
