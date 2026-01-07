@@ -1,11 +1,8 @@
 // Declaració de variables globals
 let obj = [];
 // Fi de la declaració de variables globals
-
-/********************************************************************************/
 /* Funció readSingleFile(e)                                                     */
 /* Permet a l'usuari carregar un fitxer CSV del seu ordinador                  */
-/********************************************************************************/
 function readSingleFile(e) {
   const file = e.target.files[0];
   if (!file) {
@@ -20,15 +17,20 @@ function readSingleFile(e) {
   reader.readAsText(file);
 }
 
-/********************************************************************************/
+
 /* Funció generaObj(contents)                                                   */
 /* Converteix el CSV en un array d'objectes amb les dades necessàries           */
-/********************************************************************************/
+/*                                                                             */
+/* MODIFICACIÓ:                                                                */
+/* S'ha adaptat la separació de línies del CSV perquè funcioni amb fitxers     */
+/* de diferents anys, ja que alguns utilitzen '\n' i altres '\r\n'             */
+
 function generaObj(contents) {
   // Reiniciem l'array per evitar dades antigues
   obj = [];
 
-  const files = contents.split("\r");
+  // Separació robusta de línies (compatible amb diferents formats de CSV)
+  const files = contents.split(/\r?\n/);
   const totalFiles = files.length;
 
   // Mostrem l'any
@@ -42,7 +44,7 @@ function generaObj(contents) {
     let registre = {};
 
     // Cas en què el nom del barri conté comes
-    if (camps[4][0] === '"') {
+    if (camps[4] && camps[4][0] === '"') {
       registre.diaSet = camps[9];
       registre.mes = parseInt(camps[11]);
       registre.nomMes = camps[12];
@@ -75,10 +77,10 @@ document
   .getElementById("file-input")
   .addEventListener("change", readSingleFile, false);
 
-/********************************************************************************/
+
 /* Funció creaFormulari()                                                       */
 /* Crea un formulari amb un select per seleccionar el districte                */
-/********************************************************************************/
+
 function creaFormulari() {
   const text = document.getElementById("resultats");
   text.innerHTML = "";
@@ -109,4 +111,3 @@ function creaFormulari() {
   f.appendChild(sel);
   text.appendChild(f);
 }
-
