@@ -1,14 +1,13 @@
 // Treballarem sempre amb una variable global, obj,
 // que conté tots els accidents carregats del CSV.
 
-/* ================================================= */
-/* =================== EXERCICI 2.1 ================= */
-/* Nombre total d'accidents                           */
-/* ================================================= */
+/* =================== EXERCICI 2.1 =================== */
+/* Nombre total d'accidents de l'any seleccionat       */
 function exercici01() {
   let resultat = document.getElementById("resultats");
   resultat.innerHTML = "";
 
+  // El nombre total d'accidents és la mida de l'array
   let total = obj.length;
 
   let p = document.createElement("p");
@@ -16,16 +15,15 @@ function exercici01() {
   resultat.appendChild(p);
 }
 
-/* ================================================= */
-/* =================== EXERCICI 2.2 ================= */
-/* Dia de la setmana amb més accidents               */
-/* ================================================= */
+/* =================== EXERCICI 2.2 =================== */
+/* Dia de la setmana amb més accidents                 */
 function exercici02() {
   let resultat = document.getElementById("resultats");
   resultat.innerHTML = "";
 
   let comptador = {};
 
+  // Comptem quants accidents hi ha per cada dia
   for (let i = 0; i < obj.length; i++) {
     let dia = obj[i].diaSet;
 
@@ -36,6 +34,7 @@ function exercici02() {
     }
   }
 
+  // Busquem el dia amb el nombre més gran d'accidents
   let diaMax = "";
   let maxAccidents = 0;
 
@@ -56,14 +55,13 @@ function exercici02() {
   resultat.appendChild(p);
 }
 
-/* ================================================= */
-/* =================== EXERCICI 2.3 ================= */
-/* Accidents per districte (llista)                  */
-/* ================================================= */
+/* =================== EXERCICI 2.3 =================== */
+/* Nombre d'accidents per districte                    */
 function exercici03() {
   let resultat = document.getElementById("resultats");
   resultat.innerHTML = "";
 
+  // Array de 0 a 10 (0 = Altres / desconegut)
   let comptador = new Array(11).fill(0);
 
   for (let i = 0; i < obj.length; i++) {
@@ -72,7 +70,7 @@ function exercici03() {
     if (d >= 1 && d <= 10) {
       comptador[d]++;
     } else {
-      comptador[0]++; // Altres / desconegut
+      comptador[0]++;
     }
   }
 
@@ -91,15 +89,15 @@ function exercici03() {
   resultat.appendChild(ul);
 }
 
-/* ================================================= */
-/* =================== EXERCICI 2.4 ================= */
-/* Formulari + select + eventListener                */
-/* ================================================= */
+/* =================== EXERCICI 2.4 =================== */
+/* Formulari per seleccionar districte                */
 function exercici04() {
+  // Crea el formulari amb el select de districtes
   creaFormulari();
 
   let select = document.getElementById("districtes");
 
+  // Quan canvia el districte, es recalculen els accidents
   select.addEventListener("change", function () {
     let resultat = document.getElementById("resultats");
 
