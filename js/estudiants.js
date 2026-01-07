@@ -1,13 +1,33 @@
 // Treballarem sempre amb una variable global, obj,
 // que conté tots els accidents carregats del CSV.
 
-/* =================== EXERCICI 2.1 =================== */
-/* Nombre total d'accidents de l'any seleccionat       */
-function exercici01() {
+/* ================================================= */
+/* AVÍS: comprova si el CSV està carregat             */
+/* ================================================= */
+function comprovaCSVcarregat() {
   let resultat = document.getElementById("resultats");
   resultat.innerHTML = "";
 
-  // El nombre total d'accidents és la mida de l'array
+  let p = document.createElement("p");
+  p.innerHTML =
+    "<strong>Cal carregar primer un fitxer CSV per veure els resultats.</strong>";
+  resultat.appendChild(p);
+}
+
+/* ================================================= */
+/* =================== EXERCICI 2.1 ================= */
+/* Nombre total d'accidents                           */
+/* ================================================= */
+function exercici01() {
+  // Comprovem si hi ha dades carregades
+  if (obj.length === 0) {
+    comprovaCSVcarregat();
+    return;
+  }
+
+  let resultat = document.getElementById("resultats");
+  resultat.innerHTML = "";
+
   let total = obj.length;
 
   let p = document.createElement("p");
@@ -15,15 +35,22 @@ function exercici01() {
   resultat.appendChild(p);
 }
 
-/* =================== EXERCICI 2.2 =================== */
-/* Dia de la setmana amb més accidents                 */
+/* ================================================= */
+/* =================== EXERCICI 2.2 ================= */
+/* Dia de la setmana amb més accidents               */
+/* ================================================= */
 function exercici02() {
+  if (obj.length === 0) {
+    comprovaCSVcarregat();
+    return;
+  }
+
   let resultat = document.getElementById("resultats");
   resultat.innerHTML = "";
 
   let comptador = {};
 
-  // Comptem quants accidents hi ha per cada dia
+  // Comptem accidents per dia de la setmana
   for (let i = 0; i < obj.length; i++) {
     let dia = obj[i].diaSet;
 
@@ -34,7 +61,7 @@ function exercici02() {
     }
   }
 
-  // Busquem el dia amb el nombre més gran d'accidents
+  // Busquem el dia amb més accidents
   let diaMax = "";
   let maxAccidents = 0;
 
@@ -55,9 +82,16 @@ function exercici02() {
   resultat.appendChild(p);
 }
 
-/* =================== EXERCICI 2.3 =================== */
-/* Nombre d'accidents per districte                    */
+/* ================================================= */
+/* =================== EXERCICI 2.3 ================= */
+/* Accidents per districte (llista)                  */
+/* ================================================= */
 function exercici03() {
+  if (obj.length === 0) {
+    comprovaCSVcarregat();
+    return;
+  }
+
   let resultat = document.getElementById("resultats");
   resultat.innerHTML = "";
 
@@ -89,15 +123,22 @@ function exercici03() {
   resultat.appendChild(ul);
 }
 
-/* =================== EXERCICI 2.4 =================== */
-/* Formulari per seleccionar districte                */
+/* ================================================= */
+/* =================== EXERCICI 2.4 ================= */
+/* Formulari + select + eventListener                */
+/* ================================================= */
 function exercici04() {
-  // Crea el formulari amb el select de districtes
+  if (obj.length === 0) {
+    comprovaCSVcarregat();
+    return;
+  }
+
+  // Crea el formulari amb el select (funció donada)
   creaFormulari();
 
   let select = document.getElementById("districtes");
 
-  // Quan canvia el districte, es recalculen els accidents
+  // Quan es canvia el districte, es calcula el nombre d'accidents
   select.addEventListener("change", function () {
     let resultat = document.getElementById("resultats");
 
@@ -120,13 +161,5 @@ function exercici04() {
     resultat.appendChild(p);
   });
 }
-// Mostra un avís si encara no s'ha carregat cap CSV
-function comprovaCSVcarregat() {
-  let resultat = document.getElementById("resultats");
-  resultat.innerHTML = "";
 
-  let p = document.createElement("p");
-  p.innerHTML = "<strong>Cal carregar primer un fitxer CSV per veure els resultats.</strong>";
-  resultat.appendChild(p);
-}
 
