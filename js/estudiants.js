@@ -120,3 +120,13 @@ function exercici04() {
     resultat.appendChild(p);
   });
 }
+// Mostra un avís si encara no s'ha carregat cap CSV
+function comprovaCSVcarregat() {
+  let resultat = document.getElementById("resultats");
+  resultat.innerHTML = "";
+
+  let p = document.createElement("p");
+  p.innerHTML = "<strong>Cal carregar primer un fitxer CSV per veure els resultats.</strong>";
+  resultat.appendChild(p);
+}
+
