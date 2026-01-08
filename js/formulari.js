@@ -142,10 +142,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
     nom.addEventListener("blur", validaNom);
     edat.addEventListener("change", validaEdat);
+    cp.addEventListener("input", validaCP);
     cp.addEventListener("blur", validaCP);
+    email.addEventListener("input", validaEmail);
     email.addEventListener("blur", validaEmail);
+
+    
+    password.addEventListener("input", validaPassword);
     password.addEventListener("blur", validaPassword);
+
+    password2.addEventListener("input", validaPassword2);
     password2.addEventListener("blur", validaPassword2);
+
     privacitat.addEventListener("change", validaPrivacitat);
 
     formulari.addEventListener("submit", function (e) {
