@@ -1,163 +1,274 @@
-/*************************************************************/
-/* Formulari - Programació d’Aplicacions a Internet          */
-/*************************************************************/
+// Accedim als elements del formulari
+var nom = document.getElementById("nom");
+var edat = document.getElementById("edat");
+var cp = document.getElementById("cp");
+var email = document.getElementById("email");
+var pass = document.getElementById("pass");
+var pass2 = document.getElementById("pass2");
+var privacitat = document.getElementById("privacitat");
 
-document.addEventListener("DOMContentLoaded", function () {
+// Elements d'error
+var errorNom = document.getElementById("errorNom");
+var errorEdat = document.getElementById("errorEdat");
+var errorCP = document.getElementById("errorCP");
+var errorEmail = document.getElementById("errorEmail");
+var errorPass = document.getElementById("errorPass");
+var errorPass2 = document.getElementById("errorPass2");
+var errorPrivacitat = document.getElementById("errorPrivacitat");
 
-    // Elements del formulari
-    let formulari = document.getElementById("formulari");
-    let botoEsborrar = document.getElementById("esborrar");
+// Checkboxes per mostrar contrasenya
+var mostrarPass = document.getElementById("mostrarPass");
+var mostrarPass2 = document.getElementById("mostrarPass2");
 
-    let nom = document.getElementById("nom");
-    let edat = document.getElementById("edat");
-    let cp = document.getElementById("cp");
-    let email = document.getElementById("email");
-    let password = document.getElementById("password");
-    let password2 = document.getElementById("password2");
-    let privacitat = document.getElementById("privacitat");
+// Variable per guardar les dades
+var datesFormulari = {};
 
-    let resultat = document.getElementById("resultat");
+// ========== VALIDACIONS ==========
 
-    /**************** FUNCIONS AUXILIARS ****************/
+// Validar nom - Capitalitza primera lletra de cada paraula
+function validarNom() {
+    var paraules = nom.value.split(" ");
+    var resultat = "";
 
-    function mostraError(id, text) {
-        document.getElementById(id).innerText = text;
+    for (var i = 0; i < paraules.length; i++) {
+        if (paraules[i].length > 0) {
+            resultat += paraules[i].charAt(0).toUpperCase() +
+                        paraules[i].substring(1).toLowerCase() + " ";
+        }
     }
 
-    /**************** VALIDACIONS ****************/
+    nom.value = resultat.trim();
 
-    function validaNom() {
-        let text = nom.value.trim();
-        if (text === "") {
-            mostraError("errorNom", "Camp obligatori");
-            return false;
-        }
-
-        let paraules = text.split(" ");
-        for (let i = 0; i < paraules.length; i++) {
-            if (paraules[i].length > 0) {
-                paraules[i] =
-                    paraules[i][0].toUpperCase() +
-                    paraules[i].substring(1).toLowerCase();
-            }
-        }
-        nom.value = paraules.join(" ");
-        mostraError("errorNom", "");
-        return true;
+    if (nom.value.length === 0) {
+        errorNom.innerHTML = "Camp obligatori";
+        nom.classList.add("invalid");
+        return false;
     }
 
-    function validaEdat() {
-        if (edat.value === "") {
-            mostraError("errorEdat", "Selecciona una opció");
-            return false;
-        }
-        mostraError("errorEdat", "");
-        return true;
+    errorNom.innerHTML = "";
+    nom.classList.remove("invalid");
+    return true;
+}
+
+// Validar edat - Ha de seleccionar una opció
+function validarEdat() {
+    if (edat.value === "") {
+        errorEdat.innerHTML = "Selecciona una opció";
+        edat.classList.add("invalid");
+        return false;
+    }
+    errorEdat.innerHTML = "";
+    edat.classList.remove("invalid");
+    return true;
+}
+
+// Validar codi postal - Exactament 5 dígits
+function validarCP() {
+    if (cp.value.length !== 5) {
+        errorCP.innerHTML = "Han de ser 5 dígits";
+        cp.classList.add("invalid");
+        return false;
     }
 
-    function validaCP() {
-        let text = cp.value;
-        if (text.length !== 5) {
-            mostraError("errorCP", "Han de ser 5 dígits");
+    for (var i = 0; i < cp.value.length; i++) {
+        if (isNaN(cp.value.charAt(i))) {
+            errorCP.innerHTML = "Només números";
+            cp.classList.add("invalid");
             return false;
         }
-
-        for (let i = 0; i < text.length; i++) {
-            if (text[i] < '0' || text[i] > '9') {
-                mostraError("errorCP", "Només números");
-                return false;
-            }
-        }
-        mostraError("errorCP", "");
-        return true;
     }
 
-    function validaEmail() {
-        let text = email.value;
-        let arroves = 0;
-        let punt = false;
+    errorCP.innerHTML = "";
+    cp.classList.remove("invalid");
+    return true;
+}
 
-        for (let i = 0; i < text.length; i++) {
-            if (text[i] === "@") arroves++;
-            if (arroves === 1 && text[i] === ".") punt = true;
-        }
+// Validar email - Una @ i almenys un punt després
+function validarEmail() {
+    var text = email.value;
+    var arrova = text.indexOf("@");
 
-        if (arroves !== 1 || !punt) {
-            mostraError("errorEmail", "Email incorrecte");
-            return false;
-        }
-        mostraError("errorEmail", "");
-        return true;
+    if (arrova === -1) {
+        errorEmail.innerHTML = "Ha de contenir una @";
+        email.classList.add("invalid");
+        return false;
     }
 
-    function validaPassword() {
-        let text = password.value;
-        let maj = 0, min = 0, dig = 0, esp = 0;
-        let especials = "!@#$%^&*()_+[]-={};:\\|,.<>/?";
-
-        if (text.length < 8) {
-            mostraError("errorPassword", "Mínim 8 caràcters");
-            return false;
-        }
-
-        for (let i = 0; i < text.length; i++) {
-            let c = text[i];
-            if (c >= 'A' && c <= 'Z') maj++;
-            else if (c >= 'a' && c <= 'z') min++;
-            else if (c >= '0' && c <= '9') dig++;
-            else if (especials.includes(c)) esp++;
-        }
-
-        if (maj < 1 || min < 1 || dig < 2 || esp < 1) {
-            mostraError("errorPassword", "Contrasenya no vàlida");
-            return false;
-        }
-
-        mostraError("errorPassword", "");
-        return true;
+    if (text.indexOf("@", arrova + 1) !== -1) {
+        errorEmail.innerHTML = "Només una @";
+        email.classList.add("invalid");
+        return false;
     }
 
-    function validaPassword2() {
-        if (password.value !== password2.value) {
-            mostraError("errorPassword2", "No coincideixen");
-            return false;
-        }
-        mostraError("errorPassword2", "");
-        return true;
+    if (text.indexOf(".", arrova) === -1) {
+        errorEmail.innerHTML = "Falta punt després de @";
+        email.classList.add("invalid");
+        return false;
     }
 
-    function validaPrivacitat() {
-        if (!privacitat.checked) {
-            mostraError("errorPrivacitat", "Cal acceptar-la");
-            return false;
-        }
-        mostraError("errorPrivacitat", "");
-        return true;
+    errorEmail.innerHTML = "";
+    email.classList.remove("invalid");
+    return true;
+}
+
+// Validar contrasenya - 8+ caràcters, majúscula, minúscula, 2 dígits, caràcter especial
+function validarPass() {
+    if (pass.value.length < 8) {
+        errorPass.innerHTML = "Mínim 8 caràcters";
+        pass.classList.add("invalid");
+        return false;
     }
 
-    /**************** EVENTS ****************/
+    var maj = false, min = false, num = 0, esp = false;
+    var especials = "!@#$%^&*()_+[]-={};:\\|,.<>/?";
 
-    nom.addEventListener("input", validaNom);
-    edat.addEventListener("change", validaEdat);
-    cp.addEventListener("input", validaCP);
-    email.addEventListener("input", validaEmail);
-    password.addEventListener("input", validaPassword);
-    password2.addEventListener("input", validaPassword2);
-    privacitat.addEventListener("change", validaPrivacitat);
+    for (var i = 0; i < pass.value.length; i++) {
+        var c = pass.value.charAt(i);
 
-    /**************** SUBMIT ****************/
+        if (c >= "A" && c <= "Z") maj = true;
+        else if (c >= "a" && c <= "z") min = true;
+        else if (!isNaN(c)) num++;
+        else if (especials.indexOf(c) !== -1) esp = true;
+    }
 
-    formulari.addEventListener("submit", function (e) {
-        e.preventDefault();
+    if (!maj || !min || num < 2 || !esp) {
+        errorPass.innerHTML = "Contrasenya no vàlida (min 8 caràcters, 1 majúscula, 1 minúscula, 2 dígits, 1 especial)";
+        pass.classList.add("invalid");
+        return false;
+    }
 
-        let okNom = validaNom();
-        let okEdat = validaEdat();
-        let okCP = validaCP();
-        let okEmail = validaEmail();
-        let okPass = validaPassword();
-        let okPass2 = validaPassword2();
-        let okPriv = validaPrivacitat();
+    errorPass.innerHTML = "";
+    pass.classList.remove("invalid");
+    return true;
+}
 
-        if (okNom && okEdat && okCP && okEmail && okPass && okPass2 && okPriv) {
-            resultat.innerHTML =
-                "<h3>Formulari correcte</h3>" +
+// Validar contrasenya confirmada - Ha de coincidir
+function validarPass2() {
+    if (pass.value !== pass2.value) {
+        errorPass2.innerHTML = "Les contrasenyes no coincideixen";
+        pass2.classList.add("invalid");
+        return false;
+    }
+    errorPass2.innerHTML = "";
+    pass2.classList.remove("invalid");
+    return true;
+}
+
+// Validar privacitat - Ha d'estar marcada
+function validarPrivacitat() {
+    if (!privacitat.checked) {
+        errorPrivacitat.innerHTML = "Has d'acceptar la política";
+        return false;
+    }
+    errorPrivacitat.innerHTML = "";
+    return true;
+}
+
+// ========== EVENT LISTENERS ==========
+
+// Validar en temps real quan l'usuari surt del camp
+nom.addEventListener("blur", function() {
+    validarNom();
+});
+
+edat.addEventListener("change", function() {
+    validarEdat();
+});
+
+cp.addEventListener("blur", function() {
+    validarCP();
+});
+
+email.addEventListener("blur", function() {
+    validarEmail();
+});
+
+pass.addEventListener("blur", function() {
+    validarPass();
+});
+
+pass2.addEventListener("blur", function() {
+    validarPass2();
+});
+
+// Mostrar/amagar contrasenya
+mostrarPass.addEventListener("change", function() {
+    if (mostrarPass.checked) {
+        pass.type = "text";
+    } else {
+        pass.type = "password";
+    }
+});
+
+mostrarPass2.addEventListener("change", function() {
+    if (mostrarPass2.checked) {
+        pass2.type = "text";
+    } else {
+        pass2.type = "password";
+    }
+});
+
+// Botó esborrar
+document.getElementById("borrar").addEventListener("click", function() {
+    document.getElementById("formulari").reset();
+    
+    // Netejar errors
+    errorNom.innerHTML = "";
+    errorEdat.innerHTML = "";
+    errorCP.innerHTML = "";
+    errorEmail.innerHTML = "";
+    errorPass.innerHTML = "";
+    errorPass2.innerHTML = "";
+    errorPrivacitat.innerHTML = "";
+    
+    // Netejar classes d'error
+    nom.classList.remove("invalid");
+    edat.classList.remove("invalid");
+    cp.classList.remove("invalid");
+    email.classList.remove("invalid");
+    pass.classList.remove("invalid");
+    pass2.classList.remove("invalid");
+    
+    // Netejar resultat
+    document.getElementById("resultat").innerHTML = "";
+    
+    // Restaurar tipus de camp
+    pass.type = "password";
+    pass2.type = "password";
+    mostrarPass.checked = false;
+    mostrarPass2.checked = false;
+});
+
+// Botó enviar
+document.getElementById("enviar").addEventListener("click", function() {
+    var validNom = validarNom();
+    var validEdat = validarEdat();
+    var validCP = validarCP();
+    var validEmail = validarEmail();
+    var validPass = validarPass();
+    var validPass2 = validarPass2();
+    var validPrivacitat = validarPrivacitat();
+
+    if (validNom && validEdat && validCP && validEmail && 
+        validPass && validPass2 && validPrivacitat) {
+        
+        // Guardar les dades
+        datesFormulari = {
+            nom: nom.value,
+            edat: edat.value,
+            codiPostal: cp.value,
+            email: email.value,
+            privacitat: "Acceptada"
+        };
+        
+        // Mostrar resultat
+        var html = "<h2>✓ Formulari completat correctament!</h2>";
+        html += "<p><strong>Nom:</strong> " + datesFormulari.nom + "</p>";
+        html += "<p><strong>Edat:</strong> " + datesFormulari.edat + "</p>";
+        html += "<p><strong>Codi postal:</strong> " + datesFormulari.codiPostal + "</p>";
+        html += "<p><strong>Email:</strong> " + datesFormulari.email + "</p>";
+        html += "<p><strong>Privacitat:</strong> " + datesFormulari.privacitat + "</p>";
+        
+        document.getElementById("resultat").innerHTML = html;
+    }
+});
