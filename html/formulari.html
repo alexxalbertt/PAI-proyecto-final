@@ -13,7 +13,7 @@
 
     <label for="nom">Nom i cognoms:</label>
     <input type="text" id="nom">
-    <span class="error" id="errorNom"></span>
+    <div class="error" id="errorNom"></div>
 
     <label for="edat">Rang d’edat:</label>
     <select id="edat">
@@ -25,39 +25,38 @@
         <option value="56-65">56-65</option>
         <option value="65+">Més de 65</option>
     </select>
-    <span class="error" id="errorEdat"></span>
+    <div class="error" id="errorEdat"></div>
 
     <label for="cp">Codi postal:</label>
     <input type="text" id="cp">
-    <span class="error" id="errorCP"></span>
+    <div class="error" id="errorCP"></div>
 
     <label for="email">Correu electrònic:</label>
     <input type="text" id="email">
-    <span class="error" id="errorEmail"></span>
+    <div class="error" id="errorEmail"></div>
 
     <label for="password">Contrasenya:</label>
     <input type="password" id="password">
-    <span class="error" id="errorPassword"></span>
+    <div class="error" id="errorPassword"></div>
 
     <label for="password2">Confirmar contrasenya:</label>
     <input type="password" id="password2">
-    <span class="error" id="errorPassword2"></span>
+    <div class="error" id="errorPassword2"></div>
 
     <label>
         <input type="checkbox" id="privacitat">
         Accepto la política de privacitat
     </label>
-    <span class="error" id="errorPrivacitat"></span>
+    <div class="error" id="errorPrivacitat"></div>
 
     <div class="botons">
-        <button type="button" id="esborrar">Esborrar</button>
         <button type="submit">Enviar</button>
     </div>
 
 </form>
 
 <div id="resultat"></div>
-<script src="js/formulari.js?v=1"></script>
 
+<script src="js/formulari.js"></script>
 </body>
 </html>
