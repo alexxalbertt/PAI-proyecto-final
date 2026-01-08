@@ -11,54 +11,51 @@
 
 <form id="formulari">
 
-    <label for="nom">Nom i cognoms:</label>
+    <label>Nom i cognoms:</label>
     <input type="text" id="nom">
-    <div class="error" id="errorNom"></div>
+    <span class="error" id="errorNom"></span>
 
-    <label for="edat">Rang d’edat:</label>
+    <label>Rang d'edat:</label>
     <select id="edat">
         <option value="">Selecciona una opció</option>
-        <option value="0-17">0-17</option>
-        <option value="18-25">18-25</option>
-        <option value="26-40">26-40</option>
-        <option value="41-55">41-55</option>
-        <option value="56-65">56-65</option>
-        <option value="65+">Més de 65</option>
+        <option>0-17</option>
+        <option>18-25</option>
+        <option>26-40</option>
+        <option>41-55</option>
+        <option>56-65</option>
+        <option>Més de 65</option>
     </select>
-    <div class="error" id="errorEdat"></div>
+    <span class="error" id="errorEdat"></span>
 
-    <label for="cp">Codi postal:</label>
+    <label>Codi postal:</label>
     <input type="text" id="cp">
-    <div class="error" id="errorCP"></div>
+    <span class="error" id="errorCP"></span>
 
-    <label for="email">Correu electrònic:</label>
+    <label>Correu electrònic:</label>
     <input type="text" id="email">
-    <div class="error" id="errorEmail"></div>
+    <span class="error" id="errorEmail"></span>
 
-    <label for="password">Contrasenya:</label>
-    <input type="password" id="password">
-    <div class="error" id="errorPassword"></div>
+    <label>Contrasenya:</label>
+    <input type="password" id="pass">
+    <input type="checkbox" id="mostrarPass"> Mostrar
+    <span class="error" id="errorPass"></span>
 
-    <label for="password2">Confirmar contrasenya:</label>
-    <input type="password" id="password2">
-    <div class="error" id="errorPassword2"></div>
+    <label>Confirmar contrasenya:</label>
+    <input type="password" id="pass2">
+    <input type="checkbox" id="mostrarPass2"> Mostrar
+    <span class="error" id="errorPass2"></span>
 
-    <label>
-        <input type="checkbox" id="privacitat">
-        Accepto la política de privacitat
-    </label>
-    <div class="error" id="errorPrivacitat"></div>
+    <input type="checkbox" id="privacitat"> Accepto la política de privacitat
+    <span class="error" id="errorPrivacitat"></span>
 
-    <div class="botons">
-        <!-- 🔴 IMPORTANT -->
-        <button type="button" id="esborrar">Esborrar</button>
-        <button type="submit">Enviar</button>
-    </div>
+    <button type="button" id="borrar">Esborrar</button>
+    <button type="button" id="enviar">Enviar</button>
 
 </form>
 
 <div id="resultat"></div>
 
-<script src="js/formulari.js"></script>
+<script src="js/formulari-simple.js"></script>
 </body>
 </html>
+
