@@ -1,11 +1,5 @@
-/*************************************************************/
-/* Formulari - Programació d’Aplicacions a Internet          */
-/*************************************************************/
-console.log("JS PUTO CARREGAT")
-// Quan la pàgina s'ha carregat
 document.addEventListener("DOMContentLoaded", function () {
 
-    // Accés als elements del formulari
     let formulari = document.getElementById("formulari");
 
     let nom = document.getElementById("nom");
@@ -18,7 +12,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let resultat = document.getElementById("resultat");
 
-    /**************** FUNCIONS DE VALIDACIÓ *******************/
+    function mostraError(id, text) {
+        document.getElementById(id).innerText = text;
+    }
 
     function validaNom() {
         let text = nom.value.trim();
@@ -129,52 +125,36 @@ document.addEventListener("DOMContentLoaded", function () {
         return true;
     }
 
-    function mostraError(id, text) {
-        document.getElementById(id).innerText = text;
-    }
-
-    /**************** EVENTS **********************************/
-
-    nom.addEventListener("blur", validaNom);
+    nom.addEventListener("input", validaNom);
     edat.addEventListener("change", validaEdat);
-
     cp.addEventListener("input", validaCP);
-    cp.addEventListener("blur", validaCP);
-
     email.addEventListener("input", validaEmail);
-    email.addEventListener("blur", validaEmail);
-
     password.addEventListener("input", validaPassword);
-    password.addEventListener("blur", validaPassword);
-
     password2.addEventListener("input", validaPassword2);
-    password2.addEventListener("blur", validaPassword2);
-
     privacitat.addEventListener("change", validaPrivacitat);
 
-    /**************** SUBMIT **********************************/
-
     formulari.addEventListener("submit", function (e) {
-    e.preventDefault();
+        e.preventDefault();
 
-    let okNom = validaNom();
-    let okEdat = validaEdat();
-    let okCP = validaCP();
-    let okEmail = validaEmail();
-    let okPass = validaPassword();
-    let okPass2 = validaPassword2();
-    let okPriv = validaPrivacitat();
+        let ok =
+            validaNom() &&
+            validaEdat() &&
+            validaCP() &&
+            validaEmail() &&
+            validaPassword() &&
+            validaPassword2() &&
+            validaPrivacitat();
 
-    if (okNom && okEdat && okCP && okEmail && okPass && okPass2 && okPriv) {
-        resultat.innerHTML =
-            "<h3>Formulari correcte</h3>" +
-            "<p><b>Nom:</b> " + nom.value + "</p>" +
-            "<p><b>Edat:</b> " + edat.value + "</p>" +
-            "<p><b>CP:</b> " + cp.value + "</p>" +
-            "<p><b>Email:</b> " + email.value + "</p>";
-    } else {
-        resultat.innerHTML = "";
-    }
+        if (ok) {
+            resultat.innerHTML =
+                "<h3>Formulari correcte</h3>" +
+                "<p><b>Nom:</b> " + nom.value + "</p>" +
+                "<p><b>Edat:</b> " + edat.value + "</p>" +
+                "<p><b>CP:</b> " + cp.value + "</p>" +
+                "<p><b>Email:</b> " + email.value + "</p>";
+        } else {
+            resultat.innerHTML = "";
+        }
+    });
+
 });
-
-
