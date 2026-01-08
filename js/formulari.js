@@ -155,27 +155,26 @@ document.addEventListener("DOMContentLoaded", function () {
     /**************** SUBMIT **********************************/
 
     formulari.addEventListener("submit", function (e) {
-        e.preventDefault();
+    e.preventDefault();
 
-        let okNom = validaNom();
-        let okEdat = validaEdat();
-        let okCP = validaCP();
-        let okEmail = validaEmail();
-        let okPass = validaPassword();
-        let okPass2 = validaPassword2();
-        let okPriv = validaPrivacitat();
+    let okNom = validaNom();
+    let okEdat = validaEdat();
+    let okCP = validaCP();
+    let okEmail = validaEmail();
+    let okPass = validaPassword();
+    let okPass2 = validaPassword2();
+    let okPriv = validaPrivacitat();
 
-        if (okNom && okEdat && okCP && okEmail && okPass && okPass2 && okPriv) {
-            resultat.innerHTML =
-                "<h3>Formulari correcte</h3>" +
-                "<p><b>Nom:</b> " + nom.value + "</p>" +
-                "<p><b>Edat:</b> " + edat.value + "</p>" +
-                "<p><b>CP:</b> " + cp.value + "</p>" +
-                "<p><b>Email:</b> " + email.value + "</p>";
-        } else {
-            resultat.innerHTML = "<h3>Formulari incorrecte</h3>";
-        }
-    });
-
+    if (okNom && okEdat && okCP && okEmail && okPass && okPass2 && okPriv) {
+        resultat.innerHTML =
+            "<h3>Formulari correcte</h3>" +
+            "<p><b>Nom:</b> " + nom.value + "</p>" +
+            "<p><b>Edat:</b> " + edat.value + "</p>" +
+            "<p><b>CP:</b> " + cp.value + "</p>" +
+            "<p><b>Email:</b> " + email.value + "</p>";
+    } else {
+        resultat.innerHTML = "";
+    }
 });
+
 
