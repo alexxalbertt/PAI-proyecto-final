@@ -153,7 +153,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 "<p><b>CP:</b> " + cp.value + "</p>" +
                 "<p><b>Email:</b> " + email.value + "</p>";
         } else {
-            resultat.innerHTML = "";
+            alert (mostraError)
         }
     });
 
