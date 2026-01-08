@@ -24,7 +24,6 @@ document.addEventListener("DOMContentLoaded", function () {
         let text = nom.value.trim();
         if (text === "") {
             mostraError("errorNom", "Camp obligatori");
-            nom.focus();
             return false;
         }
 
@@ -44,7 +43,6 @@ document.addEventListener("DOMContentLoaded", function () {
     function validaEdat() {
         if (edat.value === "") {
             mostraError("errorEdat", "Selecciona una opció");
-            edat.focus();
             return false;
         }
         mostraError("errorEdat", "");
@@ -55,14 +53,12 @@ document.addEventListener("DOMContentLoaded", function () {
         let text = cp.value;
         if (text.length !== 5) {
             mostraError("errorCP", "Han de ser 5 dígits");
-            cp.focus();
             return false;
         }
 
         for (let i = 0; i < text.length; i++) {
             if (text[i] < '0' || text[i] > '9') {
                 mostraError("errorCP", "Només números");
-                cp.focus();
                 return false;
             }
         }
@@ -82,7 +78,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (arroves !== 1 || !punt) {
             mostraError("errorEmail", "Email incorrecte");
-            email.focus();
             return false;
         }
         mostraError("errorEmail", "");
@@ -142,12 +137,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     nom.addEventListener("blur", validaNom);
     edat.addEventListener("change", validaEdat);
+
     cp.addEventListener("input", validaCP);
     cp.addEventListener("blur", validaCP);
+
     email.addEventListener("input", validaEmail);
     email.addEventListener("blur", validaEmail);
 
-    
     password.addEventListener("input", validaPassword);
     password.addEventListener("blur", validaPassword);
 
@@ -156,14 +152,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     privacitat.addEventListener("change", validaPrivacitat);
 
+    /**************** SUBMIT **********************************/
+
     formulari.addEventListener("submit", function (e) {
         e.preventDefault();
 
-       
-    formulari.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    // Forcem TOTES les validacions
         let okNom = validaNom();
         let okEdat = validaEdat();
         let okCP = validaCP();
@@ -171,7 +164,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let okPass = validaPassword();
         let okPass2 = validaPassword2();
         let okPriv = validaPrivacitat();
-    
+
         if (okNom && okEdat && okCP && okEmail && okPass && okPass2 && okPriv) {
             resultat.innerHTML =
                 "<h3>Formulari correcte</h3>" +
@@ -183,4 +176,6 @@ document.addEventListener("DOMContentLoaded", function () {
             resultat.innerHTML = "<h3>Formulari incorrecte</h3>";
         }
     });
-    
+
+});
+
