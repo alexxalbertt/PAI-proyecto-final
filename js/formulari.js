@@ -1,7 +1,7 @@
 /*************************************************************/
 /* Formulari - Programació d’Aplicacions a Internet          */
 /*************************************************************/
-
+console.log("JS PUTO CARREGAT")
 // Quan la pàgina s'ha carregat
 document.addEventListener("DOMContentLoaded", function () {
 
