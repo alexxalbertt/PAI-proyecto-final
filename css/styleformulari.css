@@ -1,11 +1,9 @@
-/* Estil general de la pàgina */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     padding: 20px;
 }
 
-/* Formulari */
 form {
     background-color: white;
     padding: 20px;
@@ -14,14 +12,12 @@ form {
     border-radius: 5px;
 }
 
-/* Etiquetes */
 label {
     display: block;
     margin-top: 15px;
     font-weight: bold;
 }
 
-/* Camps d'entrada */
 input[type="text"],
 input[type="password"],
 select {
@@ -30,20 +26,15 @@ select {
     margin-top: 5px;
 }
 
-/* Missatges d'error ------------------------------------------------------------------------------------------------------*/
 .error {
     color: red;
     font-size: 0.9em;
-    min-height: 1.2em;   /* 🔴 CLAU */
-    display: block;
+    min-height: 1.2em;
+    margin-top: 2px;
 }
 
-
-/* Botons */
 .botons {
     margin-top: 20px;
-    display: flex;
-    justify-content: space-between;
 }
 
 button {
@@ -51,9 +42,8 @@ button {
     cursor: pointer;
 }
 
-/* Resultat final */
 #resultat {
     margin-top: 20px;
-    background-color: #e0ffe0;
     padding: 15px;
+    background-color: #e0ffe0;
 }
